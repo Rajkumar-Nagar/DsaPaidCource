@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+#include <map>
 
 class Node
 {
@@ -13,17 +14,17 @@ public:
         this->next = NULL;
     }
 
-    ~Node()
-    {
-        int value = this->data;
-        if (this->next != NULL)
-        {
-            cout << "this is also working bro";
-            delete next;
-            this->next == NULL;
-        }
-        cout << "memory is free for node with data" << value << endl;
-    }
+    // ~Node()
+    // {
+    //     int value = this->data;
+    //     if (this->next != NULL)
+    //     {
+    //         cout << "this is also working bro";
+    //         delete next;
+    //         this->next == NULL;
+    //     }
+    //     cout << "memory is free for node with data" << value << endl;
+    // }
 };
 
 void deleteNode(int position, Node *&head)
@@ -104,6 +105,31 @@ void InsertAtmid(Node *&head, Node *&tail, int position, int data)
     temp->next = Insetmid;
 }
 
+Node *removeDuplicates(Node *head) {
+    Node *curr = head;
+
+    while (curr != NULL) {
+        Node *curr_next = curr->next;
+        Node *prev = curr;
+        
+        while (curr_next != NULL) {
+            if (curr_next->data == curr->data) {
+                Node *forward = curr_next->next;
+                prev->next = forward;
+                delete curr_next;  
+                curr_next = forward;
+            } else {
+                prev = curr_next;
+                curr_next = curr_next->next;
+            }
+        }
+        
+        curr = curr->next;
+    }
+
+    return head;
+}
+
 void Print(Node *&head)
 {
     Node *temp = head;
@@ -116,6 +142,49 @@ void Print(Node *&head)
 
     cout << endl;
 };
+bool hasCycle(Node *head) {
+    if (head == NULL) {
+        return false;
+    }
+
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            return true;
+        }
+    }
+    return false;
+}
+
+Node *foloadys(Node *head){
+
+if(head==NULL){
+    return NULL;
+}
+
+Node *temp=head;
+Node *slow=head;
+Node* fast =head;
+
+while (slow!=NULL&&fast!=NULL)
+{
+   fast=fast->next;
+   if(fast!=NULL){
+    fast=fast->next;
+   }
+   slow=slow->next;
+   if(fast==slow){
+    return slow;
+   }
+}
+
+return NULL;
+
+}
 
 int main()
 {
@@ -130,17 +199,39 @@ int main()
 
     InsertTail(tail, 30);
     Print(head);
+    InsertTail(tail, 20);
+    Print(head);
+    InsertTail(tail, 30);
+    Print(head);
+    InsertTail(tail, 60);
+    Print(head);
+    InsertTail(tail, 30);
+    Print(head);
+    InsertTail(tail, 50);
 
-    InsertAtmid(head, tail, 1, 500);
-    Print(head);
-    InsertAtmid(head, tail, 2, 400);
-    Print(head);
+    Node *dublicateremove=removeDuplicates(head);
 
-    InsertAtmid(head, tail, 7, 440);
-    Print(head);
+    Print(dublicateremove);
 
-    deleteNode(2, head);
-    Print(head);
+    //  tail->next = head->next;
+
+    // if (foloadys(head)!=NULL) {
+    //     cout << "There is a cycle in the linked list." << endl;
+    // } else {
+    //     cout << "There is no cycle in the linked list." << endl;
+    // }
+
+
+    // InsertAtmid(head, tail, 1, 500);
+    // Print(head);
+    // InsertAtmid(head, tail, 2, 400);
+    // Print(head);
+
+    // InsertAtmid(head, tail, 7, 440);
+    // Print(head);
+
+    // deleteNode(2, head);
+    // Print(head);
 
     // InsterHead(head, 30);
     // Print(head);
